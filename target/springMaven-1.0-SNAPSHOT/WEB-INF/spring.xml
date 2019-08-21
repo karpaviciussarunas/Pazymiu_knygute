@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+">
+    <context:annotation-config/>
+    <context:component-scan base-package="lt.bit" />
+    <mvc:annotation-driven>
+       
+    </mvc:annotation-driven>
+    
+    <!--tiesiog beanas, kurio tipas su parametrais-->
+    <!--taip pat lyg butu apskritims-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/dienynas?characterEncoding=UTF-8&amp;serverTimezone=UTC" />
+        <property name="username" value="root" />
+        <property name="password" value="admin" />
+    </bean>
+        
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <!--refas i ana beansa-->
+        
+        <property name="dataSource" ref="dataSource" />
+        <!--praskanavo packagus ir visus entity klases ir on fly susikure persistence unita-->
+        <!--beansas, kuris tra entity manager factory-->
+        <!--todel jam nebereikia persistence xml failo-->
+        <property name="packagesToScan" value="lt.bit.dienynas.db" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+    <!--jei ivyko exceptionas hibernate jpa layeryje, standartiskai springas apgaubtu savo exceptionu ir trowintu mums-->
+    <!--sitas nuema springo exceptiona, ir nuemta realu--> 
+    <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+    
+    <tx:annotation-driven />
+    
+    <!--praskanuok failus toje direktorijoje, ir visi kurie extendina jpa repositori-->
+    <!--sukurk on fly klase kuri implementuoja ta interface ir idek ja i bendra dokumentacija-->
+    <jpa:repositories base-package="lt.bit.dienynas.dao" />
+    <!--statinis jsp <mvc:view-controller path="/" view-name="list" />-->
+    <mvc:resources mapping="/res/**" location="/css/" />
+    <mvc:resources mapping="/**" location="/" />
+    
+</beans>

@@ -1,0 +1,6 @@
+lt\bit\dienynas\db\Studentai.class
+lt\bit\springmaven\StudentaiController.class
+lt\bit\springmaven\PazymiaiController.class
+lt\bit\dienynas\db\Pazymiai.class
+lt\bit\dienynas\dao\PazymiaiDAO.class
+lt\bit\dienynas\dao\StudentaiDAO.class
