@@ -16,7 +16,7 @@
     </head>
     <body>
         <h1>Studijos</h1>
-        Studentų sąrašas <a href="list"><button>ukrauti duomenis</button></a><br>
+        Studentų sąrašas <a href="list"><button>užkrauti duomenis</button></a><br>
         
         įtraukti naują studentą
         <a href="edit"><button>Naujas studentas</button></a>
