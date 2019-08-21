@@ -22,11 +22,11 @@
         pazymio id: ${pz.id}
         ${pz.data}
         pazymys: ${pz.pazymys}
-        <a href="pazymysedit?idp=${pz.id}"> <button>edit</button></a> 
-        <a href="pazymysdelete?idp=${pz.id}"><button>delete</button></a>
+        <a href="pazimysedit?idp=${pz.id}"> <button>edit</button></a> 
+        <a href="pazimysdelete?idp=${pz.id}"><button>delete</button></a>
         <br>
     </c:forEach>
-    <a href="pazymysedit?(idp=${idp}, idx=${idx})"><button>Naujas pažymys</button></a>
+    <a href="pazimys?idx=${idx}"><button>Naujas pažymys</button></a>
     <a href="back"><button>Back</button></a>
 </body>
 </html>

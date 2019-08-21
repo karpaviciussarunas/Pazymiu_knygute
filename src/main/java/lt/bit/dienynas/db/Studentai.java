@@ -135,9 +135,7 @@ public class Studentai implements Serializable {
 
     @Override
     public String toString() {
-        return "Studentai{" + "id=" + id + ", vardas=" + vardas + ", pavarde=" + pavarde + ", elPastas=" + elPastas +  '}';
+        return "Studentai{" + "id=" + id + ", vardas=" + vardas + ", pavarde=" + pavarde + ", elPastas=" + elPastas + '}';
     }
 
- 
-    
 }

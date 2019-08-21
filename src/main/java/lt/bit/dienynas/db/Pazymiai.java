@@ -27,7 +27,7 @@ import javax.validation.constraints.NotNull;
  * @author Sars
  */
 @Entity
-@Table(name = "pazymiai", catalog = "dienynas", schema = "")
+@Table(name = "pazymiai")
 @NamedQueries({
     @NamedQuery(name = "Pazymiai.findAll", query = "SELECT p FROM Pazymiai p")
     , @NamedQuery(name = "Pazymiai.findById", query = "SELECT p FROM Pazymiai p WHERE p.id = :id")
@@ -121,5 +121,6 @@ public class Pazymiai implements Serializable {
         return "Pazymiai{" + "id=" + id + ", data=" + data + ", pazymys=" + pazymys + ", studentasId=" + studentasId + '}';
     }
 
-  
+    
+    
 }

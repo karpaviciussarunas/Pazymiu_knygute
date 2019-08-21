@@ -5,9 +5,9 @@
  */
 package lt.bit.springmaven;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import lt.bit.dienynas.dao.PazymiaiDAO;
+import javax.ws.rs.POST;
 import lt.bit.dienynas.dao.StudentaiDAO;
 import lt.bit.dienynas.db.Pazymiai;
 import lt.bit.dienynas.db.Studentai;
@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,8 +32,6 @@ public class StudentaiController {
 
     @Autowired
     private StudentaiDAO studentaiDAO;
-    @Autowired
-    private PazymiaiDAO pazymiaiDAO;
 
 //    @GetMapping
 //    public ModelAndView index() {
@@ -126,62 +126,5 @@ public class StudentaiController {
         mv.addObject("pazymiai", pazymiaiList);
         mv.addObject("idx", id);
         return mv;
-    }
-
-    @GetMapping("/pazymysedit")
-    public ModelAndView pazimysedit(
-            @RequestParam(name = "idp", required = false) Integer idp,
-            @RequestParam(name = "idx", required = false) Integer idx) {
-//paiimane studento id ir patikriname ar toks studentas egzistuoja
-//tada patikriname ar paduotas pazymio id priklauso sitam studentui
-//jeigu paduotas pazymio id null, tuomet kuriame studentui nauja pazymi
-//jeigy paduotas pazymio id priklauso studentui tuomet redaguojame pazymi
-        if (idp == null) {
-            return new ModelAndView("pazymysedit");
-        }
-//        jeigu id egzistuoja tuomet sugeneruojame lista kaip inputa ir permetam i edit 
-        if (pazymiaiDAO.existsById(idp)) {
-            ModelAndView mv = new ModelAndView("pazymysedit");
-//            reikia surasti pazymi pagal jo id
-            Pazymiai pazymiai = pazymiaiDAO.getOne(idp);
-//            Studentai studentas = studentaiDAO.getOne(idx);
-            mv.addObject("pazymiai", pazymiai);
-            mv.addObject("idp", idp);
-            mv.addObject("idx", idx);
-//            mv.addObject("studentas", studentas);
-//            
-            return mv;
-        } else {
-            return new ModelAndView("list");
-        }
-    }
-
-    @Transactional
-    @PostMapping("savepazymys")
-    public String savepazymys(
-            @RequestParam(name = "idx", required = false) Integer id,
-            @RequestParam(name = "idp", required = false) Integer idp,
-            @RequestParam(name = "pazymiai", required = false) Pazymiai pazymiai,
-            @RequestParam(name = "pazymys", required = false) Integer pazymys,
-            @RequestParam(name = "pazymysData", required = false) String pazymysData
-    ) {
-//        Pazymiai pazymiai = null;
-        pazymiai = null;
-        try {
-//            
-            pazymiai = pazymiaiDAO.getOne(new Integer(idp));
-        } catch (Exception ex) {
-        }
-        if (pazymiai == null) {
-            pazymiai = new Pazymiai();
-        }
-        pazymiai.setId(idp);
-        pazymiai.setPazymys(pazymys);
-        pazymiai.setData(new Date());
-//        pazymiai.setStudentasId(id);
-
-//        Saugome objekta i duomenu baze
-        pazymiaiDAO.save(pazymiai);
-        return "redirect:/list";
     }
 }

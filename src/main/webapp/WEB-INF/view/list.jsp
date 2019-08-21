@@ -13,7 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Studentų sąrašas!</h1>
+        <h1>Hello LIST!</h1>
         <ul>
 
             <c:forEach items="${studentai}" var="st">

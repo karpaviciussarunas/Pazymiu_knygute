@@ -15,12 +15,15 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Studijos</h1>
-        Studentų sąrašas <a href="list"><button>ukrauti duomenis</button></a><br>
-        
-        įtraukti naują studentą
-        <a href="edit"><button>Naujas studentas</button></a>
-        
-        
+        <ul>
+            <c:forEach items="${studentai}" var="st">
+                <li>
+                    ${st.vardas}
+                    ${st.pavarde}
+                    ${st.elPastas}
+                    
+                </li>
+            </c:forEach>
+        </ul>
     </body>
 </html>
